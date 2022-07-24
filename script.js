@@ -40,20 +40,22 @@
     });
 
 //Welcome message
-    input(`
-        ----- CLASIFICACION DE LAS NAVES ESPACIALES -----
-        
-        Este programa le permite conocer cuales son las diferentes clases de naves espaciales que existen hoy en dia, asi como sus caracteristicas especificas. Estas se dividen principalmente en:
-        - Transportadores: Son el 'motor' de cada tipo de nave. Son cohetes autopropulsados que tienen como funcion lanzar una carga util al espacio.
-        - Tripuladas: Son naves diseñadas para llevar personas al espacio y mantenerlas seguras durante todo su viaje.
-        - No-tripuladas: Estas naves estan conformadas mas que todo por satelites que tienen como objetivo estudiar tanto la tierra como otros planetas.
+    console.log(`
+                                                                ----- CLASIFICACION DE LAS NAVES ESPACIALES -----
 
-        A lo largo de la historia, existieron muchas diferentes clases de naves espaciales, por lo que usted puede agregar informacion adicional a esta base de datos y asi permitir que otros puedan conocer aun mas acerca de las diferentes clases de naves espaciales
+Este programa le permite conocer cuales son las diferentes clases de naves espaciales que existen hoy en dia, asi como sus caracteristicas especificas. Estas se dividen principalmente en:
 
-        Este programa tambien le permite filtrar las diferentes naves que existen de acuerdo a un parametro en especifico.
+- Transportadores: Son el 'motor' de cada tipo de nave. Son cohetes autopropulsados que tienen como funcion lanzar una carga util al espacio.
+- Tripuladas: Son naves diseñadas para llevar personas al espacio y mantenerlas seguras durante todo su viaje.
+- No-tripuladas: Estas naves estan conformadas mas que todo por satelites que tienen como objetivo estudiar tanto la tierra como otros planetas.
 
-        Presione enter para continuar...
-    `);
+A lo largo de la historia, existieron muchas diferentes clases de naves espaciales, por lo que usted puede agregar informacion adicional a esta base de datos y asi permitir que otros puedan conocer aun mas acerca de las diferentes clases de naves espaciales
+
+Este programa tambien le permite filtrar las diferentes naves que existen de acuerdo a un parametro en especifico.
+
+Presione enter para continuar...
+`);
+input.hide("> ");
 
 //Program starts. Ensure table gets reset every time the program launches
 createSQLData(populateSQLTable, main);
@@ -96,6 +98,9 @@ createSQLData(populateSQLTable, main);
 
         } else {
             console.log("Opcion invalida");
+            console.log("\nPresiona ENTER para regresar...");
+            input.hide("> ");
+            main();
         };
     };
 
@@ -115,6 +120,9 @@ createSQLData(populateSQLTable, main);
                 return;
             } else {
                 console.log("Opcion invalida");
+                console.log("\nPresiona ENTER para regresar...");
+                input.hide("> ");
+                main();
             }
     }
 
@@ -248,7 +256,8 @@ createSQLData(populateSQLTable, main);
         pool.query(query, function(err, result, fields) {
             if(err) throw err;  
             console.table(result)
-            input("Presiona ENTER para continuar...");
+            console.log("Presiona ENTER para continuar...");
+            input.hide("> ");
             main();
         });
     };
@@ -260,7 +269,8 @@ createSQLData(populateSQLTable, main);
         pool.execute(lookup, function(err, result) {
             if(err) throw err;
             console.table(result);
-            input("Presione ENTER para regresar...");
+            console.log("Presione ENTER para regresar...");
+            input.hide("> ");
             main();  
         });
     };
@@ -377,7 +387,7 @@ createSQLData(populateSQLTable, main);
             
             pool.execute(sqlData, function(err, result) {
             if(err) reject();
-            console.log("\nDatos agregados satisfactoriamente!\nPresiona ENTER para continuar...");
+            console.log("\nDatos agregados satisfactoriamente!\n\nPresiona ENTER para continuar...");
             resolve();
             })
         })
