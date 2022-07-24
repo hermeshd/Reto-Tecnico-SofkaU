@@ -75,9 +75,8 @@ let spacecrafts = {
 // let stringSpacecrafts = JSON.stringify(spacecrafts);
 
 
-//Prompt sync function. This is necessary to accept input directly from the NodeJS console
+//Import functions necessary for the program to work and connect to the database
 const input = require('prompt-sync')();
-
 const mysql = require('mysql2');
 const pool = mysql.createPool({
     host: "localhost",
@@ -86,16 +85,12 @@ const pool = mysql.createPool({
     database: "SofkaU"
 });
 
-//Deletes previous SQL table and creates an identical one with base data
+//Program starts. Ensure table gets reset every time the program launches
 createSQLData(main);
-
-//Start program
-
 
 
 // Program starts and asks for user input
 function main(){
-
 
     console.log("Seleccione una opcion: \n1. Agregar \n2. Buscar\n");
     const action = input("> ");
@@ -118,102 +113,116 @@ function addData(){
     console.log("\nSeleccion el tipo de nave: \n1. Transportador\n2. Tripulada\n3. No Tripulada \n");
     const spaceCraftType = input("> ");
 
-        //If shuttle is selected
+
         if (spaceCraftType == 1) {
-            // Data gets added to database
-            spacecrafts.shuttles[parseInt(Object.keys(spacecrafts.shuttles).pop()) + 1]= {
-                name: input("Ingrese el nombre de la nave: "),
-                country: input("Ingrese el pais de fabricacion: "),
-                combustible: input("Ingrese el tipo de combustible: "),
-                startYear: input("Ingrese el año de fabricacion: "),
-                endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
-            }
-
-            addNewSQLData("type",
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0], 
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1], 
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2], 
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3], 
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4], 
-                "Shuttle",
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4]
-                ).then(()=>{
-                    input("");
-                    main();
-                });
-            console.log(spacecrafts);
-            console.log("\nDatos agregados satisfactoriamente!");
-            // console.log(JSON.stringify(spacecrafts));
-            // console.log(spacecrafts.shuttles);
-            
-            
-            //If manned is selected
+            shuttleAddData();
         } else if (spaceCraftType == 2) {
-            spacecrafts.manned[parseInt(Object.keys(spacecrafts.manned).pop()) + 1]= {
-                name: input("Ingrese el nombre de la nave: "),
-                country: input("Ingrese el pais de fabricacion: "),
-                maxCrew: input("Ingrese el numero maximo de tripulantes: "),
-                startYear: input("Ingrese el año de fabricacion: "),
-                endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
-            }
-
-            addNewSQLData(
-                "type",
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4],
-                "Manned",
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4]
-                );
-            console.log("\nDatos agregados satisfactoriamente!\n");
-            input("");
-            main();
-
-        //If unmanned is selected
+            mannedAddData();
         } else if (spaceCraftType == 3) {
-            spacecrafts.unmanned[parseInt(Object.keys(spacecrafts.unmanned).pop()) + 1]= {
-                name: input("Ingrese el nombre de la nave: "),
-                country: input("Ingrese el pais de fabricacion: "),
-                objectStudy: input("Ingrese el objetivo de estudio: "),
-                startYear: input("Ingrese el año de fabricacion: "),
-                endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
-            }
-            addNewSQLData(
-                "type",
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3],
-                Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4],
-                "Unmanned",
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3],
-                Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4]
-                );
-            console.log("\nDatos agregados satisfactoriamente!");
-            input("");
-            main();
-
+            unmannedAddData();
         } else if (spaceCraftType === null) {
             return;
-
         } else {
             console.log("Opcion invalida");
         }
 }
 
+//If shuttle is selected
+function shuttleAddData(){
+
+    spacecrafts.shuttles[parseInt(Object.keys(spacecrafts.shuttles).pop()) + 1]= {
+        name: input("Ingrese el nombre de la nave: "),
+        country: input("Ingrese el pais de fabricacion: "),
+        combustible: input("Ingrese el tipo de combustible: "),
+        startYear: input("Ingrese el año de fabricacion: "),
+        endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
+    }
+
+                                //Data gets added to the database
+    addNewSQLData(
+        "type",
+        Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0], 
+        Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1], 
+        Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2], 
+        Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3], 
+        Object.keys(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4], 
+        "Shuttle",
+        Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[0],
+        Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[1],
+        Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[2],
+        Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[3],
+        Object.values(spacecrafts.shuttles[Object.keys(spacecrafts.shuttles).pop()])[4]
+        ).then( () => {
+            input("");
+            main();
+            console.log("\nDatos agregados satisfactoriamente!");
+        });
+    // console.log(spacecrafts);
+    // console.log(JSON.stringify(spacecrafts));
+    // console.log(spacecrafts.shuttles);
+};
+            
+//If manned is selected
+function mannedAddData(){
+
+    spacecrafts.manned[parseInt(Object.keys(spacecrafts.manned).pop()) + 1]= {
+        name: input("Ingrese el nombre de la nave: "),
+        country: input("Ingrese el pais de fabricacion: "),
+        maxCrew: input("Ingrese el numero maximo de tripulantes: "),
+        startYear: input("Ingrese el año de fabricacion: "),
+        endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
+    }
+                                //Data gets added to the database
+    addNewSQLData(
+        "type",
+        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[0],
+        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[1],
+        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[2],
+        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[3],
+        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[4],
+        "Manned",
+        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[0],
+        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[1],
+        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[2],
+        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[3],
+        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[4]
+        ).then( () => {
+            input("");
+            main();
+            console.log("\nDatos agregados satisfactoriamente!");
+        });
+};
+
+//If unmanned is selected
+function unmannedAddData(){
+
+    spacecrafts.unmanned[parseInt(Object.keys(spacecrafts.unmanned).pop()) + 1]= {
+        name: input("Ingrese el nombre de la nave: "),
+        country: input("Ingrese el pais de fabricacion: "),
+        objectStudy: input("Ingrese el objetivo de estudio: "),
+        startYear: input("Ingrese el año de fabricacion: "),
+        endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
+    }
+                                //Data gets added to the database
+    addNewSQLData(
+        "type",
+        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[0],
+        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[1],
+        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[2],
+        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[3],
+        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[4],
+        "Unmanned",
+        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[0],
+        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[1],
+        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[2],
+        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[3],
+        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[4]
+        ).then( () => {
+            input("");
+            main();
+            console.log("\nDatos agregados satisfactoriamente!");
+        });
+};
 
 //Database stuff
 
