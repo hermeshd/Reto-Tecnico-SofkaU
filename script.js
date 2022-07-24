@@ -25,7 +25,7 @@ let spacecrafts = {
     },
     manned: {
         0: {
-            name: "DragonV2",
+            name: "Dragon V2",
             country: "USA",
             maxCrew: "4",
             startYear: "2012",
@@ -78,7 +78,7 @@ let spacecrafts = {
 //Import functions necessary for the program to work and connect to the database
 const input = require('prompt-sync')();
 const mysql = require('mysql2');
-const pool = mysql.createPool({
+const pool = mysql.createConnection({
     host: "localhost",
     user: "hermes",
     password: "1234",
@@ -86,19 +86,36 @@ const pool = mysql.createPool({
 });
 
 //Program starts. Ensure table gets reset every time the program launches
-createSQLData(main);
+createSQLData(populateSQLTable, main);
 
 
 // Program starts and asks for user input
 function main(){
-
+    
     console.log("Seleccione una opcion: \n1. Agregar \n2. Buscar\n");
     const action = input("> ");
 
     if (action == 1) {
         addData();
     } else if (action == 2) {
-        searchData();
+        
+        console.log(`Seleccione una categoria para buscar en la base de datos:
+        1. Tipo de nave (Transportador, tripulada o no tripulada)
+        2. Nombre de la nave
+        3. Pais de fabricacion de la nave
+        4. Tipo de combustible que utiliza la nave
+        5. Año de fabricacion
+        6. Año de finalizacion de uso
+        7. Capacidad maxima de tripulantes
+        8. Objeto de estudio`
+        );
+        
+        let searchOption = input("> ");
+
+        let value = input("Ingrese el valor a buscar: ");
+
+        searchData(searchOption, value);
+        
     } else if (action === null) {
         return;
     } else {
@@ -224,7 +241,149 @@ function unmannedAddData(){
         });
 };
 
-//Database stuff
+function searchData(parameter, value) {
+   
+    let sqlParameter = "";
+
+    switch (parameter) {
+        case "1":
+            sqlParameter = "type"
+            break;
+        case "2":
+            sqlParameter = "name"
+            break;
+        case "3":
+            sqlParameter = "country"
+            break;
+        case "4":
+            sqlParameter = "combustible"
+            break;
+        case "5":
+            sqlParameter = "startYear"
+            break;
+        case "6":
+            sqlParameter = "endYear"
+            break;
+        case "7":
+            sqlParameter = "maxCrew"
+            break;
+        case "8":
+            sqlParameter = "objectStudy"
+            break;
+    }
+
+    let query = "SELECT * FROM spacecrafts WHERE " + sqlParameter + "='" + value + "';";
+
+    pool.query(query, function(err, result, fields) {
+        if(err) throw err;  
+        console.log(result);
+    });
+};
+
+
+
+//------------------------------------------Database stuff----------------------------------------------------------------------------------------------
+
+function populateSQLTable(){
+
+    let sqlFill = `INSERT INTO spacecrafts(
+        type,
+        name,
+        country,
+        combustible,
+        startYear,
+        endYear,
+        maxCrew,
+        ObjectStudy)
+        VALUES(
+        'Shuttle',
+        'Saturn V',
+        'USA',
+        'Kerosene',
+        '1960',
+        '1980',
+        'None',
+        'None'), 
+        (
+        'Shuttle',
+        'Space Shuttle',
+        'USA',
+        'Hydrogen',
+        '1980',
+        '2011',
+        'None',
+        'None'),
+        (
+        'Shuttle',
+        'Ariane 5',
+        'Europe',
+        'Hydrogen',
+        '1960',
+        'Actualidad',
+        'None',
+        'None'),
+        (
+        'Manned',
+        'Dragon V2',
+        'USA',
+        'None',
+        '2012',
+        'Actualidad',
+        '4',
+        'None'),
+        (
+        'Manned',
+        'Apollo',
+        'USA',
+        'None',
+        '1960',
+        '1980',
+        '3',
+        'None'),
+        (
+        'Manned',
+        'Soyuz',
+        'Russia',
+        'None',
+        '1960',
+        'Actualidad',
+        '3',
+        'None'),
+        (
+        'Unmanned',
+        'Voyager 2',
+        'USA',
+        'None',
+        '1960',
+        'Actualidad',
+        'None',
+        'Interstellar Space'),
+        (
+        'Unmanned',
+        'New Horizons',
+        'Europe',
+        'None',
+        '2005',
+        '2018',
+        'None',
+        'Pluto'),
+        (
+        'Unmanned',
+        'Cassini-Huygens',
+        'Europe',
+        'None',
+        '2005',
+        '2017',
+        'None',
+        'Saturn')
+        ;`;
+
+    pool.execute(sqlFill, function(err, result) {
+        if(err) throw err;  
+        console.log(result);
+    });
+
+};
 
 // let stringSpacecrafts = JSON.stringify(spacecrafts);
 
@@ -232,29 +391,46 @@ function addNewSQLData(par1, par2, par3, par4, par5, par6, val1, val2, val3, val
 
     let sqlData = "INSERT INTO spacecrafts(" + par1 + ", " + par2 + ", " + par3 + ", " + par4 + ", " + par5 + ", " + par6 + ") VALUES('" + val1 + "', '" + val2 + "', '" + val3 + "', '" + val4 + "', '" + val5 + "', '" + val6 + "');";
 
-    return new Promise((resolve, reject) => {pool.execute(sqlData, function(err, result) {
+    return new Promise((resolve, reject) => {
+        
+        pool.execute(sqlData, function(err, result) {
         if(err) reject();  
         console.log(result);
         resolve();
+        })
     })
-})
 };
 
-function createSQLData(callback) {
+function createSQLData(callback, callback2) {
     
-    let sqlDrop = "DROP TABLE spacecrafts;";
+    let sqlDrop = "DROP TABLE IF EXISTS spacecrafts;";
 
     pool.execute(sqlDrop, function(err, result) {
         if(err) throw err;  
         console.log(result);
     });
 
-    let sqlCreate = "CREATE TABLE `SofkaU`.`spacecrafts` (`id` INT NOT NULL AUTO_INCREMENT,`type` VARCHAR(255) NOT NULL,`name` VARCHAR(255) NOT NULL,`country` VARCHAR(255) NOT NULL,`combustible` VARCHAR(255) NOT NULL DEFAULT 'None',`startYear` VARCHAR(255) NOT NULL,`endYear` VARCHAR(255) NOT NULL,`maxCrew` VARCHAR(255) NOT NULL DEFAULT 'None',`objectStudy` VARCHAR(255) NOT NULL DEFAULT 'None', PRIMARY KEY (`id`));";
+    let sqlCreate = `
+    CREATE TABLE SofkaU.spacecrafts( 
+        id INT NOT NULL AUTO_INCREMENT,
+        type VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        country VARCHAR(255) NOT NULL,
+        combustible VARCHAR(255) NOT NULL DEFAULT 'None',
+        startYear VARCHAR(255) NOT NULL,
+        endYear VARCHAR(255) NOT NULL,
+        maxCrew VARCHAR(255) NOT NULL DEFAULT 'None',
+        objectStudy VARCHAR(255) NOT NULL DEFAULT 'None',
+        PRIMARY KEY (id)
+        );`;
 
    pool.execute(sqlCreate, function(err, result) {
         if(err) throw err;  
         console.log(result);
         callback();
+        callback2();
     });
+
+    
 };
 
