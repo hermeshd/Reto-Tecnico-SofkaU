@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "prompt-sync": "^4.2.0"
+  }
+}
