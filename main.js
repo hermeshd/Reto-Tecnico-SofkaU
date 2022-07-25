@@ -10,8 +10,6 @@ const input = promptSync();                                                     
                                                                                     //
 //////////////////////////////////////////////////////////////////////////////////////
 
-// //Check database connection
-// const db = mysql.createPool
 
 
 //Welcome message
