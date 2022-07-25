@@ -85,6 +85,8 @@ The program works by navigating through some menus and filling out the desired d
 
 The first thing that pops up is a welcome message in which we press `ENTER` and the first menu will appear:
 
+<sub><sup>_(Sometimes when too much times passes between the Welcome message and the user pressing ENTER, it crashes due to a timeout error, this is pending fixing but the way to overcome this error is to just start the program and **quickly** press **ENTER**)_
+
 ```sh
 Que accion desea realizar?: 
 1. Agregar datos 
