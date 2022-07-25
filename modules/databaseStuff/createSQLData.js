@@ -31,7 +31,6 @@ export default function createSQLData(callback, callback2) {
 
     pool.execute(sqlCreate, function(err, result) {
         if(err) throw err;
-        console.log(result);
         callback();
         callback2();
     });

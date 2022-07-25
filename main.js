@@ -14,36 +14,7 @@ const pool = mysql.createConnection({                                           
     database: "SofkaU"                                                              //
 });                                                                                 //
                                                                                     //
-                                                                                    //Defining the objects
-let spacecrafts = {
-    shuttles: {
-        0: {
-            name: "value",
-            country: "value",
-            combustible: "value",
-            startYear: "value",
-            endYear: "value"
-        },
-    },
-    manned: {
-        0: {
-            name: "value",
-            country: "value",
-            maxCrew: "value",
-            startYear: "2012",
-            endYear: "Actualidad"
-        }
-    },
-    unmanned: {
-        0: {
-            name: "value",
-            country: "value",
-            objectStudy: "value",
-            startYear: "value",
-            endYear: "value"
-        }
-    }
-};                                                                                  //
+                                                                                    //
 //////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -73,7 +44,7 @@ createSQLData(populateSQLTable, main);
 // Program starts and asks for user input
 export default function main(){
     
-    console.log("\nQue accion desea realizar?: \n1. Agregar datos \n2. Buscar datos \n3. Ver datos actuales\n");
+    console.log("\nQue accion desea realizar?: \n1. Agregar datos \n2. Buscar datos \n3. Ver datos actuales \n4. Salir del programa");
     const action = input("> ");
 
     if (action == 1) {                                                                                                      //Agregar datos
@@ -106,6 +77,8 @@ export default function main(){
     } else if (action === null) {
         return;
 
+    } else if (action == 4) {                                                                                           
+        process.exit(); 
     } else {
         console.log("Opcion invalida");
         console.log("\nPresiona ENTER para regresar...");
@@ -118,4 +91,3 @@ export default function main(){
 //Necessary exports for other files
 export {pool};
 export {input};
-export {spacecrafts};

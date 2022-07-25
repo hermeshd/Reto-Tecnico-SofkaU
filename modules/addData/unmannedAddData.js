@@ -1,33 +1,37 @@
 import * as addNewSQLData from "../databaseStuff/addNewSQLData.js";
 import * as main from "../../main.js";
-import { spacecrafts, input } from "../../main.js";
+import { input } from "../../main.js";
+import { Unmanned } from "../../objects.js";
 
 //If unmanned is selected
 export default function unmannedAddData(){
 
-    spacecrafts.unmanned[parseInt(Object.keys(spacecrafts.unmanned).pop()) + 1]= {
-        name: input("Ingrese el nombre de la nave: "),
-        country: input("Ingrese el pais de fabricacion: "),
-        objectStudy: input("Ingrese el objetivo de estudio: "),
-        startYear: input("Ingrese el año de fabricacion: "),
-        endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
-    }
-                                //Data gets added to the database
-    addNewSQLData.default(
-        "type",
-        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[0],
-        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[1],
-        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[2],
-        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[3],
-        Object.keys(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[4],
-        "Unmanned",
-        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[0],
-        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[1],
-        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[2],
-        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[3],
-        Object.values(spacecrafts.unmanned[Object.keys(spacecrafts.unmanned).pop()])[4]
-        ).then( () => {
-            input("");
-            main.default();
-        });
+    var newSpacecraft = new Unmanned(
+        input("Ingrese el nombre de la nave: "),
+        input("Ingrese el pais de fabricacion: "),
+        input("Ingrese el año de fabricacion: "),
+        input("Ingrese el año de termino de la mision (Ingrese '0' si aun esta en funcionamiento): "),
+        input("Ingrese el objeto estudiado por esta nave: ")
+        );
+        if (newSpacecraft.endYear == "0") {
+            newSpacecraft.endYear = "Actualidad";
+        };
+                            //Data gets added to the database
+addNewSQLData.default(
+    "type",
+    "name", 
+    "country", 
+    "objectStudy", 
+    "startYear", 
+    "endYear", 
+    newSpacecraft.type,
+    newSpacecraft.name,
+    newSpacecraft.country,
+    newSpacecraft.objectStudy,
+    newSpacecraft.startYear,
+    newSpacecraft.endYear
+    ).then( () => {
+        input("");
+        main.default();
+    });
 };

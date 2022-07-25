@@ -1,31 +1,35 @@
 import * as addNewSQLData from "../databaseStuff/addNewSQLData.js";
 import * as main from "../../main.js";
-import { spacecrafts, input } from "../../main.js";
+import { input } from "../../main.js";
+import { Manned } from "../../objects.js";
 
 //If manned is selected
 export default function mannedAddData(){
 
-    spacecrafts.manned[parseInt(Object.keys(spacecrafts.manned).pop()) + 1]= {
-        name: input("Ingrese el nombre de la nave: "),
-        country: input("Ingrese el pais de fabricacion: "),
-        maxCrew: input("Ingrese el numero maximo de tripulantes: "),
-        startYear: input("Ingrese el año de fabricacion: "),
-        endYear: input("Ingrese el año de retiro de la nave (Ingrese '0' si aun esta operativa): ")
-    }
+    var newSpacecraft = new Manned(
+        input("Ingrese el nombre de la nave: "),
+        input("Ingrese el pais de fabricacion: "),
+        input("Ingrese el año de fabricacion: "),
+        input("Ingrese el año de termino de la mision (Ingrese '0' si aun esta en funcionamiento): "),
+        input("Ingrese la capacidad maxima de personas en la nave: ")
+        );
+        if (newSpacecraft.endYear == "0") {
+            newSpacecraft.endYear = "Actualidad";
+        };
                                 //Data gets added to the database
     addNewSQLData.default(
         "type",
-        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[0],
-        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[1],
-        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[2],
-        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[3],
-        Object.keys(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[4],
-        "Manned",
-        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[0],
-        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[1],
-        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[2],
-        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[3],
-        Object.values(spacecrafts.manned[Object.keys(spacecrafts.manned).pop()])[4]
+        "name", 
+        "country", 
+        "maxCrew", 
+        "startYear", 
+        "endYear", 
+        newSpacecraft.type,
+        newSpacecraft.name,
+        newSpacecraft.country,
+        newSpacecraft.maxCrew,
+        newSpacecraft.startYear,
+        newSpacecraft.endYear
         ).then( () => {
             input("");
             main.default();
