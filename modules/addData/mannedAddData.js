@@ -1,6 +1,6 @@
 import * as addNewSQLData from "../databaseStuff/addNewSQLData.js";
-import * as main from "../main.js";
-import { spacecrafts, input } from "../main.js";
+import * as main from "../../main.js";
+import { spacecrafts, input } from "../../main.js";
 
 //If manned is selected
 export default function mannedAddData(){

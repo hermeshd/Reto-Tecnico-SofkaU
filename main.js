@@ -1,9 +1,9 @@
 //Import functions necessary for the program to work and connect to the database
-import addData from "./addData/addData.js";
-import createSQLData from "./databaseStuff/createSQLData.js";
-import populateSQLTable from "./databaseStuff/populateSQLTable.js";
-import searchData from "./searchData/searchData.js";
-import lookUpAllSQLData from "./lookUpData/lookUpAllSQLData.js";
+import addData from "./modules/addData/addData.js";
+import createSQLData from "./modules/databaseStuff/createSQLData.js";
+import populateSQLTable from "./modules/databaseStuff/populateSQLTable.js";
+import searchData from "./modules/searchData/searchData.js";
+import lookUpAllSQLData from "./modules/lookUpData/lookUpAllSQLData.js";
 import promptSync from "prompt-sync";
 const input = promptSync();
 import mysql from 'mysql2';

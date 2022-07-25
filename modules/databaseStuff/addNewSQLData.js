@@ -1,4 +1,4 @@
-import { pool } from "../main.js";
+import { pool } from "../../main.js";
 
 //This function adds the new data entered by the user
 export default function addNewSQLData(par1, par2, par3, par4, par5, par6, val1, val2, val3, val4, val5, val6) {
