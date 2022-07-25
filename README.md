@@ -1,40 +1,125 @@
-# Reto-Tecnico-SofkaU
-RETO TECNICO TRAINING DESARROLLO DE SOFTWARE
+# SofkaU Technical Challenge - Software Development
+## _Sofka Space Station_
 
-Mi nombre es Hermes Guerrero y me gustaria ser parte del programa de entrenamiento de SofkaU para convertirme en un desarrollador Full-Stack. Estas son las instrucciones para usar este programa sin mayores complicaciones.
+Simple inventory management program created with Node.js and MySQL. It is based on [this](https://moaramore.com/2016/05/14/clasificacion-de-las-naves-espaciales/) article and it allows the user to either search for a specific spacecraft based on its properties or add new data of their own to further populate the database.
 
-Descripcion del programa:
+_**Program interface is written in Spanish****_
 
-El programa consta principalmente de unos datos de clasificacion de naves espaciales de acuerdo al articulo (https://moaramore.com/2016/05/14/clasificacion-de-las-naves-espaciales/). Este articulo clasifica a las naves espaciales en 3 principales categorias:
+## Table of contents
 
-    - Transportadores: La parte del cohete que impulsa a la nave fuera de la atmosfera terrestre.
-    - Tripulada: Naves adecuadas para el transporte de humanos.
-    - No-tripuladas: Naves principalmente diseñadas para estudiar el planeta Tierra asi como otros planetas.
+* [Features](#features)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Using the program](#using-the-program)
+* [Things to keep in mind](#things-to-keep-in-mind)
+* [License](#license)
 
-El programa permite al usuario consultar en una pequeña base de datos acerca de algunos ejemplos de estas naves espaciales y sus caracteristicas.
-Si asi lo desea, el usuario puede complementar esta base de datos con su propia informacion; teniendo en cuenta las caracteristicas que contiene la base de datos.
+## Features
 
-Toda la informacion es suministrada y presentada mediante la consola de Node.JS.
+- Interaction with a SQL database that allows the user to read or add new data
+- The program will run as long as the user wants it to run. No need to launch the program multiple times in order to keep adding data
+- Data results are presented in a nice and organized table to help user readability
+- Nice and simple console interface to allow user input
 
-Para iniciar el programa se debe ejecutar el siguiente comando:
+## Technologies
 
+This program was created using:
+
+- [Node.js](https://nodejs.org/en/) - Evented I/O for the backend
+- [MySQL](https://www.mysql.com/) - Relational database management system
+
+## Setup
+
+Since this program was made in Ubuntu 20.04, this setup process will indicate the instructions to run this program using Ubuntu.
+
+Installing Node.js:
+
+```sh
+$ sudo apt update
+$ sudo apt install nodejs
+```
+Installing npm, the Node.js package manager:
+
+```sh
+$ sudo apt install npm
+$ npm install
+```
+
+Installing MySQL:
+
+```sh
+$ sudo apt update
+$ sudo apt install mysql-server
+$ sudo systemctl start mysql.service
+```
+
+After installing MySQL, it is needed to configure it. You can do it following [these instructions.](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04)
+
+Since the program uses a table from a local database, it is necessary to let the program know things such as the `host`, `user`, `password` and `database` name.
+
+The user can edit these values opening the _**db.js**_ file inside the program's folder. Inside this file, you will find something like this:
+
+```sh
+import mysql from 'mysql2';
+const pool = mysql.createConnection({
+    host: "localhost",      //Edit host
+    user: "hermes",         //Edit user
+    password: "1234",       //Edit password
+    database: "SofkaU"      //Edit database
+});
+```
+
+Just edit accordingly and everything should work just fine (Make sure that the username, password and database name match the ones you created).
+
+## Using the program
+
+Now that we have everything set up, it is time to launch the program.
+
+To launch the program we need to open a terminal inside the folder that contains the program and type:
+
+```sh
 $ node main.js
+```
 
-IMPORTANTE:
+The program works by navigating through some menus and filling out the desired data. Much like those automated phone calls that asks you _Please press 1 to do something._
 
-Este programa almacena los datos en una base de datos SQL. Por lo que es necesario instalar las dependecias correspondientes.
+The first thing that pops up is a welcome message in which we press `ENTER` and the first menu will appear:
 
-$ npm install mysql
+```sh
+Que accion desea realizar?: 
+1. Agregar datos 
+2. Buscar datos 
+3. Ver datos actuales 
+4. Salir del programa
+```
 
-A continuacion, el usuario debe crear una base de datos en la cual se guardaran los datos del programa.
+This is an example of one of the menus found in the program, I will let you find out the rest! ;)
 
-Luego de esto, es necesario abrir y editar el archivo "db.js".
+# Things to keep in mind
 
-En este archivo se deben editar los siguientes campos con la informacion correspondiente:
-    host: "localhost",                //Editar host
-    user: "hermes",                   //Editar usuario
-    password: "1234",                 //Editar contraseña
-    database: "SofkaU"                //Editar nombre base de datos (La que crea el usuario)
+This is quite a simple program but one of which I'm proud of. I am _not_ a professional software engineer, but I'm hoping one day I will be, since this is really a passion of mine and I enjoy doing little projects like this on my free time.
+
+Maybe one day I will come back to this project and make it 100x times better, adding a GUI, maybe tweaking some things about the database, added functionality... Who knows... _Wink wink ;)_
+
+
+# License
+
+You are free to use this program as you like.
+This project is licensed under the terms of the [MIT](https://github.com/IgorAntun/node-chat/blob/master/LICENSE) license.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

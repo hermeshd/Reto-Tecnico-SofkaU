@@ -5,8 +5,8 @@ import populateSQLTable from "./modules/databaseStuff/populateSQLTable.js";     
 import searchData from "./modules/searchData/searchData.js";                        //
 import lookUpAllSQLData from "./modules/lookUpData/lookUpAllSQLData.js";            //
 import promptSync from "prompt-sync";                                               //
-const input = promptSync();                                                     //
-                                                                               //
+const input = promptSync();                                                         //
+                                                                                    //
                                                                                     //
 //////////////////////////////////////////////////////////////////////////////////////
 
