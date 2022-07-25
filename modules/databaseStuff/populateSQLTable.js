@@ -1,4 +1,4 @@
-import {pool} from "../main.js";
+import {pool} from "../../main.js";
 
 //Function to populate the SQL table with the predetermined data
 export default function populateSQLTable(){

@@ -1,5 +1,5 @@
-import * as main from "../main.js";
-import {pool, input} from "../main.js";
+import * as main from "../../main.js";
+import {pool, input} from "../../main.js";
 
 // Function to filter data and print all the rows that meet the selected criteria
 export default function searchData(parameter, value) {

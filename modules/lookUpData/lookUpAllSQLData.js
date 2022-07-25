@@ -1,5 +1,5 @@
-import * as main from "../main.js";
-import {pool, input} from "../main.js";
+import * as main from "../../main.js";
+import {pool, input} from "../../main.js";
 
 //Function to display the current SQL table
 export default function lookUpAllSQLData() {

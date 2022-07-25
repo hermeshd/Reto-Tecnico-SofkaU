@@ -1,19 +1,20 @@
-//Import functions necessary for the program to work and connect to the database
-import addData from "./modules/addData/addData.js";
-import createSQLData from "./modules/databaseStuff/createSQLData.js";
-import populateSQLTable from "./modules/databaseStuff/populateSQLTable.js";
-import searchData from "./modules/searchData/searchData.js";
-import lookUpAllSQLData from "./modules/lookUpData/lookUpAllSQLData.js";
-import promptSync from "prompt-sync";
-const input = promptSync();
-import mysql from 'mysql2';
-const pool = mysql.createConnection({
-    host: "localhost",
-    user: "hermes",
-    password: "1234",
-    database: "SofkaU"
-});
-//Defining the objects
+                                                                                    //Necessary imports for the program to work
+import addData from "./modules/addData/addData.js";                                 //
+import createSQLData from "./modules/databaseStuff/createSQLData.js";               //
+import populateSQLTable from "./modules/databaseStuff/populateSQLTable.js";         //
+import searchData from "./modules/searchData/searchData.js";                        //
+import lookUpAllSQLData from "./modules/lookUpData/lookUpAllSQLData.js";            //
+import promptSync from "prompt-sync";                                               //
+const input = promptSync();                                                         //
+import mysql from 'mysql2';                                                         //
+const pool = mysql.createConnection({                                               //
+    host: "localhost",                                                              //
+    user: "hermes",                                                                 //
+    password: "1234",                                                               //
+    database: "SofkaU"                                                              //
+});                                                                                 //
+                                                                                    //
+                                                                                    //Defining the objects
 let spacecrafts = {
     shuttles: {
         0: {
@@ -42,7 +43,8 @@ let spacecrafts = {
             endYear: "value"
         }
     }
-};
+};                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -112,6 +114,8 @@ export default function main(){
     };
 };
 
+
+//Necessary exports for other files
 export {pool};
 export {input};
 export {spacecrafts};

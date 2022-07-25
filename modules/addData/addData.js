@@ -1,7 +1,7 @@
 import shuttleAddData from "./shuttleAddData.js";
 import mannedAddData from "./mannedAddData.js";
 import unmannedAddData from "./unmannedAddData.js";
-import {input} from "../main.js"
+import {input} from "../../main.js"
 // import input from "prompt-sync";
 // const main = ("../main.js");
 
