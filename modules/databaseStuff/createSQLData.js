@@ -3,7 +3,7 @@
 
 // This function deletes the table if it exists, creates it back again and populates it by calling back the populateSQLData function. Then it executes the main part of the program.
 
-import {pool} from "../../main.js";
+import {pool} from "../../db.js";
 
 // This is done to reset the data everytime the program is closed and re-opened
 export default function createSQLData(callback, callback2) {

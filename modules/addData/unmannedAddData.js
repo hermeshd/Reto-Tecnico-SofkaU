@@ -1,7 +1,7 @@
 import * as addNewSQLData from "../databaseStuff/addNewSQLData.js";
 import * as main from "../../main.js";
 import { input } from "../../main.js";
-import { Unmanned } from "../../objects.js";
+import { Unmanned } from "../../models/unmanned.js";
 
 //If unmanned is selected
 export default function unmannedAddData(){
@@ -16,6 +16,9 @@ export default function unmannedAddData(){
         if (newSpacecraft.endYear == "0") {
             newSpacecraft.endYear = "Actualidad";
         };
+
+        newSpacecraft.added().success();
+
                             //Data gets added to the database
 addNewSQLData.default(
     "type",
@@ -24,7 +27,7 @@ addNewSQLData.default(
     "objectStudy", 
     "startYear", 
     "endYear", 
-    newSpacecraft.type,
+    "No-Tripulada",
     newSpacecraft.name,
     newSpacecraft.country,
     newSpacecraft.objectStudy,

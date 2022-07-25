@@ -1,7 +1,8 @@
 import * as addNewSQLData from "../databaseStuff/addNewSQLData.js";
 import * as main from "../../main.js";
 import { input } from "../../main.js";
-import { Shuttles } from "../../objects.js";
+import { Shuttles } from "../../models/shuttles.js";
+import { Spacecraft } from "../../models/spacecraft.js";
 
 
 //If shuttle is selected
@@ -18,6 +19,8 @@ export default function shuttleAddData(){
                 newSpacecraft.endYear = "Actualidad";
             };
 
+            newSpacecraft.added().success();
+
                                 //Data gets added to the database
     addNewSQLData.default(
         "type",
@@ -26,7 +29,7 @@ export default function shuttleAddData(){
         "combustible", 
         "startYear", 
         "endYear", 
-        newSpacecraft.type,
+        "Transportador",
         newSpacecraft.name,
         newSpacecraft.country,
         newSpacecraft.combustible,

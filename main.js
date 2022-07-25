@@ -5,18 +5,13 @@ import populateSQLTable from "./modules/databaseStuff/populateSQLTable.js";     
 import searchData from "./modules/searchData/searchData.js";                        //
 import lookUpAllSQLData from "./modules/lookUpData/lookUpAllSQLData.js";            //
 import promptSync from "prompt-sync";                                               //
-const input = promptSync();                                                         //
-import mysql from 'mysql2';                                                         //
-const pool = mysql.createConnection({                                               //
-    host: "localhost",                                                              //
-    user: "hermes",                                                                 //
-    password: "1234",                                                               //
-    database: "SofkaU"                                                              //
-});                                                                                 //
-                                                                                    //
+const input = promptSync();                                                     //
+                                                                               //
                                                                                     //
 //////////////////////////////////////////////////////////////////////////////////////
 
+// //Check database connection
+// const db = mysql.createPool
 
 
 //Welcome message
@@ -89,5 +84,4 @@ export default function main(){
 
 
 //Necessary exports for other files
-export {pool};
 export {input};

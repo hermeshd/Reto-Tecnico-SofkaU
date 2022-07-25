@@ -1,4 +1,4 @@
-import {pool} from "../../main.js";
+import {pool} from "../../db.js";
 
 //Function to populate the SQL table with the predetermined data
 export default function populateSQLTable(){
@@ -74,7 +74,7 @@ export default function populateSQLTable(){
         '1960',
         'Actualidad',
         '-',
-        'Interstellar Space'),
+        'Espacio Interestelar'),
         (
         'No-Tripulada',
         'New Horizons',
@@ -83,7 +83,7 @@ export default function populateSQLTable(){
         '2005',
         '2018',
         '-',
-        'Pluto'),
+        'Pluton'),
         (
         'No-Tripulada',
         'Cassini-Huygens',
@@ -92,7 +92,7 @@ export default function populateSQLTable(){
         '2005',
         '2017',
         '-',
-        'Saturn')
+        'Saturno')
         ;`;
 
     pool.execute(sqlFill, function(err, result) {
